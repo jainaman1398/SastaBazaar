@@ -14,6 +14,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Shopping Cart</a>
+                <span class="badge">{{session.cart.totalQty}}</span>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,7 +45,7 @@
                 <h4 class="card-title">{{this.Title}}</h4>
                 <p class="card-text">{{this.Description}}</p>
                 <div class="pull-left">{{this.price}}</div>
-                <a href="#" class="btn btn-primary">Add- To Cart</a>
+                <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add- To Cart</a>
             </div>
         </div>
         </div>

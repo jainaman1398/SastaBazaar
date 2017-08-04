@@ -9,16 +9,14 @@ mongoose.connect('mongodb://localhost:27017/myapp');
 
 var product_chunks=3;
 var cart=[];
-console.log("aman");
+
 router.get('/', function(req, res, next) {
   Product.find(function (err,docs) {
-      console.log("pakode");
       for(var i=0;i<docs.length;i+=product_chunks)
       {
           cart.push(docs.slice(i,i+product_chunks));
       }
     //  console.log(cart);
-      console.log("an");
   })
  res.render('index',{aj:cart});
 });
@@ -65,5 +63,12 @@ router.get('/signin',function (req,res) {
 router.post('/signin',passport.authenticate('local.signin', { successRedirect: '/profile',
     failureRedirect: '/signin',
     failureFlash: true }));
+
+/*
+router.get('/add-to-cart/:id',function (req,res,next) {
+    console.log("aman");
+   res.render("profile");
+})
+*/
 
 module.exports = router;

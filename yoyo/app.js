@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var flash=require('connect-flash');
 var validator=require('express-validator');
 var app = express();
-
+var Product=require('./models/users');
+var Cart=require('./models/cart');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
@@ -50,6 +51,22 @@ app.get('/logout',function (req,res,next) {
     req.logout();
     res.redirect('/');
 });
+
+app.get('/add-to-cart/:id',function (req,res) {
+    var ProductId=req.params.id;
+    var cart=new Cart(req.session.cart? req.session.cart:{})
+    Product.findById(ProductId,function (err,product) {
+        if(err){
+            return res.redirect('/');
+        }
+        cart.add(product,product.id);
+        req.session.cart=cart;
+        console.log(req.session.cart);
+        res.redirect('/');
+    });
+});
+
+
 app.use('/', index);
 
 // catch 404 and forward to error handler
@@ -69,7 +86,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 
 app.get('/signup',index);
