@@ -1,0 +1,56 @@
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Sasta Bazaar</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Shopping Cart</a>
+                <span class="badge">{{session.cart.totalQty}}</span>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user" aria-hidden="true"></i>User Account
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {{#if login}}
+                        <a class="dropdown-item" href="/profile">Profile</a>
+                        <a class="dropdown-item" href="/logout">logout</a>
+                    {{else}}
+                        <a class="dropdown-item" href="/signup">Signup</a>
+                        <a class="dropdown-item" href="/signin">Signin</a>
+                    {{/if}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br><br>
+<div class="container">
+{{#each aj}}
+    <div class="row">
+    {{#each this}}
+        <div class="col-4">
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top" src="{{this.ImagePath}}" alt="Card image cap" height="55%">
+            <div class="card-block">
+                <h4 class="card-title">{{this.Title}}</h4>
+                <p class="card-text">{{this.Description}}</p>
+                <div class="pull-left">{{this.price}}</div>
+                <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add- To Cart</a>
+            </div>
+        </div>
+        </div>
+    {{/each}}
+    </div>
+    <br>
+{{/each}}
+</div>

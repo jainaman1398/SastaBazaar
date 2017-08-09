@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.css">
+<div class="container">
+    <div class="row">
+        <h1 class="text-capitalize text-center col"> Your Cart </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-10"></div>
+        <a class="col-2 btn btn-warning" href="index.html">
+            View Catalog
+        </a>
+    </div>
+<br><br>
+    <table class="table" id="cart-table">
+   {{#each products}}
+<tr>
+    <td>{{this.item.Title}}</td>
+    <td>{{this.price}}</td>
+    <td>{{this.qty}}</td>
+    <td><a href="/remove-item"><i class="fa fa-plus-circle" aria-hidden="true">+</i></a></td>
+    <td><a href="/add-item"><i class="fa fa-minus-circle" aria-hidden="true">-</i></a></td>
+</tr>
+   {{/each}}
+    </table>
+
+    <tr>
+        <td>Total price</td>
+        <td>{{this.totalPrice}}</td>
+    </tr>
+
+</div>
+
