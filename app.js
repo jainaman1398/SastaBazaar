@@ -17,7 +17,7 @@ var session=require('express-session')
 var MongoStore=require('connect-mongo')(session);
 var passport=require('passport')
 mongoose.connect('mongodb://localhost:23456/myapp');
-require('./passport.js')
+require('./passport.js');
 var order=require('./models/orders');
 var aj;
 app.set('views', path.join(__dirname, 'views'));
@@ -105,15 +105,20 @@ function islogged(req,res,next) {
 app.get('/shopping-cart',islogged,function (req,res) {
     var aman;
     order.find({user:req.user},function (err,docs) {
-        if(err)
+        if (err)
             throw err;
-        aman=docs[0].Cart_item;
+        aman = docs[0].Cart_item;
+        console.log("yo");
         console.log(docs);
-        console.log(req.user);
+        console.log(aman);
+
+          var cart1=(new Cart(aman?aman:{})).generateArray();
+          if(aman){
+        res.render('cart', {products: cart1, totalPrice: aman.totalPrice||0});}
+        else{
+              res.render('cart', {products: cart1, totalPrice:0});
+          }
     })
-    var cart=new Cart(aman?aman:{});
-    console.log(cart.generateArray());
-    res.render('cart',{products:cart.generateArray(),totalPrice:cart.totalPrice});
 });
 
 app.use('/', index);
@@ -131,7 +136,6 @@ app.use(function(err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
     res.status(err.status || 500);
     res.render('error');
 });
