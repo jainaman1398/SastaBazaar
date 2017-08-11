@@ -18,9 +18,8 @@ var MongoStore=require('connect-mongo')(session);
 var passport=require('passport')
 mongoose.connect('mongodb://localhost:23456/myapp');
 require('./passport.js')
-
-
-// view engine setup
+var order=require('./models/orders');
+var aj;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -45,7 +44,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function (req,res,next) {
     res.locals.login=req.isAuthenticated();
     res.locals.session=req.session;
-    req.session.destroy();
+    if(req.user) {
+        order.findOne({user: req.user},function (err,docs) {
+            if(err)
+                throw err;
+           if(!docs){
+               var t=new order();
+               t.user=req.user;
+             t.Cart_item={};
+              console.log(t);
+               t.save();
+           }
+        })
+    }
     next();
 })
 
@@ -56,15 +67,33 @@ app.get('/logout',function (req,res,next) {
 
 app.get('/add-to-cart/:id',islogged,function (req,res) {
     var ProductId=req.params.id;
-    var cart=new Cart(req.session.cart? req.session.cart:{})
+    order.find({user:req.user},function (err,docs) {
+        if(err)
+            throw err;
+        console.log(docs);
+        console.log(typeof (docs));
+        aj=docs[0].Cart_item;
+
+
+    var cart=new Cart(aj?aj:{});
     Product.findById(ProductId,function (err,product) {
-        if(err){
+        if (err) {
             return res.redirect('/');
         }
-        cart.add(product,product.id);
-        req.session.cart=cart;
-        console.log(req.session.cart);
+        cart.add(product, product.id);
+        order.find({user: req.user}, function (err, docs) {
+            if (err)
+                throw err;
+            docs[0].Cart_item = cart;
+            docs[0].user = req.user;
+            docs[0].save(function (err) {
+                if (err)
+                    throw err;
+            })
+        })
         res.redirect('/');
+
+    })
     });
 });
 
@@ -74,7 +103,15 @@ function islogged(req,res,next) {
     }
 }
 app.get('/shopping-cart',islogged,function (req,res) {
-    var cart=new Cart(req.session.cart);
+    var aman;
+    order.find({user:req.user},function (err,docs) {
+        if(err)
+            throw err;
+        aman=docs[0].Cart_item;
+        console.log(docs);
+        console.log(req.user);
+    })
+    var cart=new Cart(aman?aman:{});
     console.log(cart.generateArray());
     res.render('cart',{products:cart.generateArray(),totalPrice:cart.totalPrice});
 });

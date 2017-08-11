@@ -2,15 +2,16 @@ var express = require('express');
 var router = express.Router();
 var mongoose=require('mongoose');
 
-var Product=require('../models/users')
+var Product=require('../models/users');
 //var db=require('../database');
 var passport=require('passport');
 mongoose.connect('mongodb://localhost:27017/myapp');
 
 var product_chunks=3;
-var cart=[];
+
 
 router.get('/', function(req, res, next) {
+    var cart=[];
   Product.find(function (err,docs) {
       for(var i=0;i<docs.length;i+=product_chunks)
       {

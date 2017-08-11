@@ -12,6 +12,7 @@
     </div>
 <br><br>
     <table class="table" id="cart-table">
+        {{#if products}}
    {{#each products}}
 <tr>
     <td>{{this.item.Title}}</td>
@@ -29,4 +30,8 @@
     </tr>
 
 </div>
+        {{else}}
 
+            <h>Add Something TO Cart </h>
+
+        {{/if}}

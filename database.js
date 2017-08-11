@@ -3,7 +3,7 @@ var Product=require('./models/users');
 
 
 var mongoose=require('mongoose');
-mongoose.connect('mongodb://localhost:27017/myapp');
+mongoose.connect('mongodb://localhost:23456/myapp');
 
 var products=[
     new Product({
@@ -61,5 +61,5 @@ function exit() {
 Product.find(function (err,docs) {
    //console.log(docs);
 })
-module.exports=products;
+//module.exports=products;
 
