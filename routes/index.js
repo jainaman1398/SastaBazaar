@@ -38,6 +38,7 @@ function notloggedIn(req,res,next){
 }
 
 router.get('/profile',isloggedIn,function (req,res) {
+    console.log("yei");
     res.render('profile');
 })
 

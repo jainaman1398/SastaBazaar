@@ -7,7 +7,7 @@ module.exports=function (oldcart) {
         var storedItem=this.Items[id];
         if(!storedItem)
         {
-            storedItem=this.Items[id]={item:item,qty:0,price:0};
+            storedItem=this.Items[id]={item:item,qty:0,price:0,ide:id};
         }
         storedItem.qty++;
         storedItem.price=(storedItem.item.price)*(storedItem.qty);

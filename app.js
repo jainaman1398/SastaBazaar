@@ -48,13 +48,13 @@ app.use(function (req,res,next) {
         order.findOne({user: req.user},function (err,docs) {
             if(err)
                 throw err;
-           if(!docs){
-               var t=new order();
-               t.user=req.user;
-             t.Cart_item={};
-              console.log(t);
-               t.save();
-           }
+            if(!docs){
+                var t=new order();
+                t.user=req.user;
+                t.Cart_item={};
+                console.log(t);
+                t.save();
+            }
         })
     }
     next();
@@ -66,6 +66,7 @@ app.get('/logout',function (req,res,next) {
 });
 
 app.get('/add-to-cart/:id',islogged,function (req,res) {
+    console.log("haa");
     var ProductId=req.params.id;
     order.find({user:req.user},function (err,docs) {
         if(err)
@@ -75,25 +76,25 @@ app.get('/add-to-cart/:id',islogged,function (req,res) {
         aj=docs[0].Cart_item;
 
 
-    var cart=new Cart(aj?aj:{});
-    Product.findById(ProductId,function (err,product) {
-        if (err) {
-            return res.redirect('/');
-        }
-        cart.add(product, product.id);
-        order.find({user: req.user}, function (err, docs) {
-            if (err)
-                throw err;
-            docs[0].Cart_item = cart;
-            docs[0].user = req.user;
-            docs[0].save(function (err) {
+        var cart=new Cart(aj?aj:{});
+        Product.findById(ProductId,function (err,product) {
+            if (err) {
+                return res.redirect('/');
+            }
+            cart.add(product, product.id);
+            order.find({user: req.user}, function (err, docs) {
                 if (err)
                     throw err;
+                docs[0].Cart_item = cart;
+                docs[0].user = req.user;
+                docs[0].save(function (err) {
+                    if (err)
+                        throw err;
+                })
             })
-        })
-        res.redirect('/');
+            res.redirect('/');
 
-    })
+        })
     });
 });
 
@@ -108,16 +109,13 @@ app.get('/shopping-cart',islogged,function (req,res) {
         if (err)
             throw err;
         aman = docs[0].Cart_item;
-        console.log("yo");
-        console.log(docs);
         console.log(aman);
-
-          var cart1=(new Cart(aman?aman:{})).generateArray();
-          if(aman){
-        res.render('cart', {products: cart1, totalPrice: aman.totalPrice||0});}
+        var cart1=(new Cart(aman?aman:{})).generateArray();
+        if(aman){
+            res.render('cart', {products: cart1, totalPrice: aman.totalPrice||0});}
         else{
-              res.render('cart', {products: cart1, totalPrice:0});
-          }
+            res.render('cart', {products: cart1, totalPrice:0});
+        }
     })
 });
 
