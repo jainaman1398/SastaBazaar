@@ -171,11 +171,6 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.get('/signup',index);
-app.post('/signup',index);
-app.get('/signin',index);
-app.post('/signin',index);
-
 app.listen(23456,function () {
     console.log("server @ https://localhost:23456");
 });

@@ -14,6 +14,12 @@ var products=new Schema({
     },
     price:{
         type:Number,required:true
+    },
+    quantity:{
+        type:Number,required:true
+    },
+    tag:{
+        type:String
     }
 });
 

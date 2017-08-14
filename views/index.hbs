@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="../public/stylesheets/style.css">
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -39,13 +39,13 @@
     <div class="row">
     {{#each this}}
         <div class="col-4">
-        <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="{{this.ImagePath}}" alt="Card image cap" height="55%">
-            <div class="card-block">
+        <div class="card yo" >
+            <img class="card-img-top img card" src="{{this.ImagePath}}" alt="Card image cap">
+            <div class="card-block container">
                 <h4 class="card-title">{{this.Title}}</h4>
                 <p class="card-text">{{this.Description}}</p>
-                <div class="pull-left">{{this.price}}</div>
-                <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add- To Cart</a>
+                <div class="pull-left"><kbd style="font-size: large">&#x20B9; {{this.price}}</kbd> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <a href="/add-to-cart/{{this._id}}" class="btn btn-primary pull-right">Add- To Cart</a></div>
             </div>
         </div>
         </div>
