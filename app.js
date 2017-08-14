@@ -98,6 +98,38 @@ app.get('/add-to-cart/:id',islogged,function (req,res) {
     });
 });
 
+
+app.get('/remove-from-cart/:id',islogged,function (req,res) {
+    var ProductId=req.params.id;
+
+    order.find({user:req.user},function (err,docs) {
+        if(err)
+            throw err;
+        aj=docs[0].Cart_item;
+        var cart=new Cart(aj);
+        Product.findById(ProductId,function (err,product) {
+            if (err) {
+                return res.redirect('/');
+            }
+            cart.remove(product, product.id);
+            order.find({user: req.user}, function (err, docs) {
+                if (err)
+                    throw err;
+                docs[0].Cart_item = cart;
+                docs[0].user = req.user;
+                docs[0].save(function (err) {
+                    if (err)
+                        throw err;
+                })
+            })
+            res.redirect('/');
+
+        })
+    });
+
+})
+
+
 function islogged(req,res,next) {
     if(req.isAuthenticated()){
         next();
