@@ -134,6 +134,9 @@ function islogged(req,res,next) {
     if(req.isAuthenticated()){
         next();
     }
+    else{
+        res.redirect('/signin')
+    }
 }
 app.get('/shopping-cart',islogged,function (req,res) {
     var aman;

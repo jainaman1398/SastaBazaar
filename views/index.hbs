@@ -1,4 +1,8 @@
+<style>
+
+</style>
 <link rel="stylesheet" href="../public/stylesheets/style.css">
+<div style="background-color: #00B7FF">
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -33,7 +37,18 @@
         </ul>
     </div>
 </nav>
-<br><br>
+<br></div><br><br>
+
+
+<div class="w3-content w3-section" style="max-width:500px">
+
+    <img class="mySlides pic" src="https://www.curalate.com/wp-content/uploads/2016/01/yellowdress.png" >
+        <img class="mySlides pic" src="https://adpearance.com/images/blog/layout.png">
+    <img class="mySlides pic" src="https://ithemes.com/wp-content/uploads/2014/08/ecommerce-product-photography.png" >
+</div>
+<div style="background-color: #eeeeee">
+<br><br></div><br>
+<body>
 <div class="container">
 {{#each aj}}
     <div class="row">
@@ -54,3 +69,21 @@
     <br>
 {{/each}}
 </div>
+<script>
+
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 2000); // Change image every 2 seconds
+    }
+</script>
+</body>

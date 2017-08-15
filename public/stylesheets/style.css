@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow: scroll;
 }
 
 a {
@@ -10,12 +11,12 @@ a {
 .yo{
   width:310px;
   max-width:310px;
-  height: 600px;
+  height: 540px;
   background-color: GrayText;
 }
 
 .img{
-    height:400px;
+    height:350px;
     width:300px;
 }
 
@@ -34,3 +35,9 @@ a {
 .container {
   padding: 2px 16px;
 }
+
+.pic{
+  height:370px;
+  width:1400px;
+}
+
