@@ -1,1 +1,35 @@
-<h>yoyo</h>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+{{#if item}}
+    <a href="'/"><input type="button" value="HOME" class="btn btn-info"></a>
+    &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  <h style="font-size: xx-large">Order Summary</h><br><hr>
+{{#each item}}
+
+   &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp <p class="btn btn-warning"> <kbd style="background-color: chartreuse">Name</kbd>&nbsp&nbsp:{{this.Name}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<kbd style="background-color: chartreuse">Address</kbd>&nbsp&nbsp: {{this.Address}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <kbd style="background-color: chartreuse">Contact_No</kbd> &nbsp&nbsp: {{this.Mobile_No}}   </p>
+<br>  <table class="table table-bordered">
+       <thead>
+       <tr>
+           <th>Title</th>
+           <th>Price</th>
+           <th>Quantity</th>
+       </tr>
+       </thead>
+   {{#each this.Carting.Items}}
+
+    <tr>
+        <td>{{this.item.Title}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.qty}}</td>
+    </tr>
+
+{{/each}}  </table>
+   <b>Total_Price {{this.Carting.totalPrice}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  Quantity {{this.Carting.totalQty}}</b>
+    <br><br> <br><br>
+{{/each}}
+    {{else}}
+    <a href="/"><input type="button"  class="btn btn-info" value="HOME"></a><hr>
+    <h class="btn btn-warning">Order Something to see your order Summary</h>
+{{/if}}

@@ -11,8 +11,18 @@
         </a>
     </div>
 <br><br>
-    <table class="table" id="cart-table">
+
         {{#if products}}
+                <table class="table table-bordered" id="cart-table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Increment</th>
+                        <th>Decrement</th>
+                    </tr>
+                    </thead>
    {{#each products}}
 <tr>
     <td>{{this.item.Title}}</td>
@@ -29,7 +39,7 @@
         <td>{{this.totalPrice}}</td>
     </tr>
 <br><br><br><br>
-  <a href><input type="button" value="CheckOut" class="btn btn-success"> </a>
+  <a href="/checkout"><input type="button" value="CheckOut" class="btn btn-success"> </a>
 
    </div>
         {{else}}

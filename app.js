@@ -20,6 +20,7 @@ mongoose.connect('mongodb://localhost:23456/myapp');
 require('./passport.js');
 var order=require('./models/orders');
 var aj;
+var done=require('./models/done');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -60,10 +61,52 @@ app.use(function (req,res,next) {
     next();
 })
 
+app.get('/checkout',function (req,res) {
+    res.render('check');
+})
+
+app.post('/checkout',function (req,res,next) {
+    order.find({user:req.user},function (err,docs) {
+        if (err)
+            throw err;
+        aj = docs[0].Cart_item;
+        var yoyo = new done({
+        Name : req.body.name,
+        Address : req.body.address,
+        Mobile_No : req.body.contactno,
+        user : req.user,
+        Carting : aj
+    });
+  yoyo.save(function (err) {
+      if(err)
+          throw err;
+  })
+        docs[0].Cart_item = {};
+        docs[0].user = req.user;
+        docs[0].save(function (err) {
+            if (err)
+                throw err;
+        })
+
+    });
+
+    res.redirect('/')
+})
+
 app.get('/logout',function (req,res,next) {
     req.logout();
     res.redirect('/');
 });
+
+app.get('/profile',islogged,function (req,res) {
+    done.find({user:req.user},function (err,docs) {
+        if(err)
+            throw err;
+
+        res.render('profile',{item:docs});
+    })
+
+})
 
 app.get('/add-to-cart/:id',islogged,function (req,res) {
     console.log("haa");
