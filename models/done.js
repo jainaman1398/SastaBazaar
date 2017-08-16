@@ -7,6 +7,7 @@ var done=new Schema({
     Address:{type:String,required:true},
     Mobile_No:{type:Number,required:true},
     Carting:{type:Object,required:true},
+    Mail:{type:String,required:true},
     user:{type:Schema.Types.ObjectId,ref:'User'}
 });
 

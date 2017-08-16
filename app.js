@@ -3,6 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var nodemailer=require('nodemailer');
 var bodyParser = require('body-parser');
 var flash=require('connect-flash');
 var validator=require('express-validator');
@@ -20,6 +21,7 @@ mongoose.connect('mongodb://localhost:23456/myapp');
 require('./passport.js');
 var order=require('./models/orders');
 var aj;
+var User=require('./models/signin');
 var done=require('./models/done');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -37,6 +39,7 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 var index = require('./routes/index');
 
@@ -65,7 +68,38 @@ app.get('/checkout',function (req,res) {
     res.render('check');
 })
 
+function mail(receiver) {
+   var yo=1;
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'sastabazaar13@gmail.com',
+            pass: 'bazaarsasta'
+        }
+    });
+
+    var mailOptions = {
+        from: 'sastabazaar13@gmail.com',
+        to: receiver,
+        subject: 'Greetings from SastaBazaar',
+        text: 'Your Order Summary on your Profile'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            yo=0;
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+    return yo;
+}
+
 app.post('/checkout',function (req,res,next) {
+
+
     order.find({user:req.user},function (err,docs) {
         if (err)
             throw err;
@@ -74,9 +108,12 @@ app.post('/checkout',function (req,res,next) {
         Name : req.body.name,
         Address : req.body.address,
         Mobile_No : req.body.contactno,
+            Mail:req.body.mail,
         user : req.user,
         Carting : aj
     });
+        if(mail(req.body.mail)!=1)
+            quit();
   yoyo.save(function (err) {
       if(err)
           throw err;
@@ -171,6 +208,50 @@ app.get('/remove-from-cart/:id',islogged,function (req,res) {
     });
 
 })
+
+function fun(y){
+
+    User.findOne({Email:y},function (err,dosc) {
+        if(err)
+            throw err;
+        var password=dosc.password;
+
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'sastabazaar13@gmail.com',
+            pass: 'bazaarsasta'
+        }
+    });
+
+    var mailOptions = {
+        from: 'sastabazaar13@gmail.com',
+        to: y,
+        subject: 'Your Sasta Account password details',
+        text: password
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+    })
+}
+
+app.get('/recovery',function (req,res,next) {
+    res.render('recovery');
+})
+
+app.post('/recovery',function (req,res,next) {
+    var y=req.body.r_mail;
+    fun(y);
+    res.redirect('/');
+});
 
 
 function islogged(req,res,next) {

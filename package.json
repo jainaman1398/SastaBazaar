@@ -15,9 +15,11 @@
     "express-session": "^1.15.4",
     "express-validator": "^3.2.1",
     "flash": "^1.1.0",
+    "gmail-send": "^1.2.11",
     "hbs": "~4.0.1",
     "mongoose": "^4.11.4",
     "morgan": "~1.8.1",
+    "nodemailer": "^4.0.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.4.2"
